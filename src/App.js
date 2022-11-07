@@ -1,13 +1,28 @@
+import { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [title, setTitle] = useState('...');
+
+  useEffect(() => {
+    const getTitle = async () => {
+      const response = await fetch('/api/example');
+      const data = await response.json();
+
+      if (data.success) {
+        setTitle(data.title);
+      }
+    }
+    getTitle();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          { title }
         </p>
         <a
           className="App-link"
@@ -15,7 +30,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          We learn React + NodeJS
         </a>
       </header>
     </div>
